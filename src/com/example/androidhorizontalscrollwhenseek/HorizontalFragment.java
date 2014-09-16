@@ -2,11 +2,14 @@ package com.example.androidhorizontalscrollwhenseek;
 
 import org.jh.widget.HorizontalListView;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -27,7 +30,8 @@ public class HorizontalFragment extends Fragment {
 				.findViewById(android.R.id.text1);
 		listView.setAdapter(new MyAdapter());
 		listView.setEnabled(false);
-		listView.setSeekBarWidth(540);
+		int width = getScreenWidth(getActivity());
+		listView.setSeekBarWidth(width);
 		final SeekBar seekBar = (SeekBar) rootView.findViewById(R.id.seekBar);
 		seekBar.setMax(COUNT);
 		seekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
@@ -55,6 +59,13 @@ public class HorizontalFragment extends Fragment {
 		});
 
 		return rootView;
+	}
+
+	public static int getScreenWidth(Context context) {
+		WindowManager manager = (WindowManager) context
+				.getSystemService(Context.WINDOW_SERVICE);
+		Display display = manager.getDefaultDisplay();
+		return display.getWidth();
 	}
 
 	private class MyAdapter extends BaseAdapter {
